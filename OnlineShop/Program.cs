@@ -16,6 +16,9 @@ builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(Conne
 #endregion
 
 
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
+builder.Services.AddScoped<IItemRepo, ItemRepo>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
