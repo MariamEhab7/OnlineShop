@@ -1,4 +1,6 @@
+using BL;
 using DAL;
+using DAL.Repository.Specific.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,9 +17,14 @@ var ConnetionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(ConnetionString));
 #endregion
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddScoped<IItemRepo, ItemRepo>();
+builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
+builder.Services.AddScoped<IGenreRepo, GenreRepo>();
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+builder.Services.AddScoped<IVariationValueRepo, VariationValueRepo>();
 
 var app = builder.Build();
 

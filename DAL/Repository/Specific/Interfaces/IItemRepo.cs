@@ -1,6 +1,6 @@
 ﻿namespace DAL;
 
-public interface IItemRepo
+public interface IItemRepo : IGenericRepo<Items>
 {
     Task<ICollection<Items>> GetItemsForMen();
     Task<ICollection<Items>> GetItemsForWomen();

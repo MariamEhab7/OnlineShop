@@ -17,7 +17,7 @@ public class GenericRepo<Entity> : IGenericRepo<Entity> where Entity : class
         return _context.Set<Entity>().ToList();
     }
 
-    public Entity GetById(int id)
+    public Entity GetById(Guid id)
     {
         return _context.Set<Entity>().Find(id);
     }
@@ -27,7 +27,7 @@ public class GenericRepo<Entity> : IGenericRepo<Entity> where Entity : class
 
     }
 
-    public void DeleteById(int id)
+    public void DeleteById(Guid id)
     {
         var entity = GetById(id);
         _context.Remove(entity);

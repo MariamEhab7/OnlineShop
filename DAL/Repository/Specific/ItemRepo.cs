@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Repository.Specific.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL;
 
@@ -34,4 +35,5 @@ public class ItemRepo : GenericRepo<Items>, IItemRepo
         var items = await _context.Items.Where(p => p.Product.ProductId == id).ToListAsync();
         return items;
     }
+
 }

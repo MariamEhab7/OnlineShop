@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="AutoMapper\" />
     <Folder Include="Manager\Interfaces\" />
-    <Folder Include="Manager\Services\" />
   </ItemGroup>
 
   <ItemGroup>

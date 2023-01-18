@@ -3,9 +3,9 @@
 public interface IGenericRepo<Entity> where Entity : class
 {
     List<Entity> GetAll();
-    Entity GetById(int id);
+    Entity GetById(Guid id);
     void Add(Entity entity);
     void Update(Entity entity);
-    void DeleteById(int id);
+    void DeleteById(Guid id);
     void SaveChanges();
 }
