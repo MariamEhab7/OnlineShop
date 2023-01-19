@@ -1,7 +1,4 @@
-﻿using DAL.Repository.Specific;
-using DAL.Repository.Specific.Interfaces;
-
-namespace DAL;
+﻿namespace DAL;
 
 public class OrderRepo : GenericRepo<Order> , IOrderRepo
 {

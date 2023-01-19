@@ -3,9 +3,10 @@ using DAL;
 
 namespace BL;
 
-public class ProductService
+public class ProductService : IProductService
 {
-	private readonly IProductRepo _productRepo;
+    #region DI
+    private readonly IProductRepo _productRepo;
 	private readonly IMapper _mapper;
 	private readonly ICategoryRepo _categoryRepo;
 	private readonly IGenreRepo _genreRepo;
@@ -18,19 +19,20 @@ public class ProductService
 		_categoryRepo = categoryRepo;
 		_genreRepo = genreRepo;
 	}
+    #endregion
 
-	public async Task<ProductReadDTO> AddProduct(ProductAddDTO model)
+    public async Task<ProductReadDTO> AddProduct(ProductAddDTO model)
 	{
 		var DbProduct= _mapper.Map<Product>(model);
-        DbProduct.ProductId = new Guid();
+        DbProduct.ProductId = Guid.NewGuid();
 
-		var catrgory = DbProduct.Category;
-		var assignCategory = await _categoryRepo.GetCategoryById(catrgory.CategoryId);
+        var category = DbProduct.Category;
+		var assignCategory = await _categoryRepo.GetCategoryById(category.CategoryId);
 		DbProduct.Category = assignCategory;
 
         var genre = DbProduct.GenreOfItems;
 		var assignGenre = await _genreRepo.GetGenreById(genre.GenreId);
-		DbProduct.GenreOfItems = genre;
+		DbProduct.GenreOfItems = assignGenre;
 
 		_productRepo.Add(DbProduct);
 		_productRepo.SaveChanges();
@@ -38,5 +40,19 @@ public class ProductService
 		return readProduct;
     }
 
-
+    public async Task<ProductReadDTO> UpdateProduct(ProductAddDTO model, Guid id)
+    {
+        var Old = _productRepo.GetById(id);
+        _mapper.Map(model, Old );
+        _productRepo.Update(Old);
+        _productRepo.SaveChanges();
+        var result = _mapper.Map<ProductReadDTO>(Old);
+        return result;
+    } 
+	
+	public void DeleteProduct(Guid id)
+    {
+        _productRepo.DeleteById(id);
+        _productRepo.SaveChanges();
+    }
 }

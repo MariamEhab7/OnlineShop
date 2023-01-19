@@ -1,14 +1,13 @@
 ﻿using DAL;
-using System.ComponentModel.DataAnnotations;
-
+using System;
+using System.Collections.Generic;
 namespace BL;
 
-public class ItemReadDTO
+public class ItemUpdateDTO
 {
-    public ItemReadDTO()
+    public ItemUpdateDTO()
     {
         this.VariationValues = new HashSet<ValuesVarReadDTO>();
-        this.Orders = new HashSet<OrderReadDTO>();
     }
 
     public string ItemName { get; set; }
@@ -20,5 +19,4 @@ public class ItemReadDTO
     public Product Product { get; set; }
 
     public ICollection<ValuesVarReadDTO> VariationValues { get; set; }
-    public ICollection<OrderReadDTO> Orders { get; set; }
 }

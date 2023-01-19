@@ -22,7 +22,6 @@ public class Items
     public int Quantity { get; set; }
 
     public Product Product { get; set; }
-    public GenreOfItems GenreOfItems { get; set; }
 
     public ICollection<VariationValues> VariationValues { get; set; }
     public ICollection<Order> Orders { get; set; }

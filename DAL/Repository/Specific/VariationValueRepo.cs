@@ -1,6 +1,4 @@
-﻿using DAL.Repository.Specific.Interfaces;
-
-namespace DAL;
+﻿namespace DAL;
 
 public class VariationValueRepo : GenericRepo<VariationValues>, IVariationValueRepo
 {

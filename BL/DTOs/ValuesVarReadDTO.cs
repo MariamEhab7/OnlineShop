@@ -4,7 +4,8 @@ namespace BL;
 
 public class ValuesVarReadDTO
 {
-    public string Values { get; set; }
+    public Guid ValuesId { get; set; }
+    //public string Values { get; set; }
 
-    //public Variation Variation { get; set; }
+    public Variation Variation { get; set; }
 }

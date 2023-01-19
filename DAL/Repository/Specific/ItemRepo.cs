@@ -1,5 +1,4 @@
-﻿using DAL.Repository.Specific.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DAL;
 
@@ -12,23 +11,23 @@ public class ItemRepo : GenericRepo<Items>, IItemRepo
         _context = context;
     }
 
-    public async Task<ICollection<Items>> GetItemsForChildren()
-    {
-        var items = await _context.Items.Where(p => p.GenreOfItems.Equals("C")).ToListAsync();
-        return items;
-    }
+    //public async Task<ICollection<Items>> GetItemsForChildren()
+    //{
+    //    var items = await _context.Items.Where(p => p.GenreOfItems.Equals("C")).ToListAsync();
+    //    return items;
+    //}
 
-    public async Task<ICollection<Items>> GetItemsForMen()
-    {
-        var items = await _context.Items.Where(p => p.GenreOfItems.Equals("M")).ToListAsync();
-        return items;
-    }
+    //public async Task<ICollection<Items>> GetItemsForMen()
+    //{
+    //    var items = await _context.Items.Where(p => p.GenreOfItems.Equals("M")).ToListAsync();
+    //    return items;
+    //}
 
-    public async Task<ICollection<Items>> GetItemsForWomen()
-    {
-        var items = await _context.Items.Where(p => p.GenreOfItems.Equals("F")).ToListAsync();
-        return items;
-    }
+    //public async Task<ICollection<Items>> GetItemsForWomen()
+    //{
+    //    var items = await _context.Items.Where(p => p.GenreOfItems.Equals("F")).ToListAsync();
+    //    return items;
+    //}
 
     public async Task<ICollection<Items>> GetItemsOfProduct(Guid id)
     {

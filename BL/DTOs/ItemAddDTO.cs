@@ -17,7 +17,6 @@ public class ItemAddDTO
     public int Quantity { get; set; }
 
     public Product Product { get; set; }
-    public GenreOfItems GenreOfItems { get; set; }
 
     public ICollection<ValuesVarReadDTO> VariationValues { get; set; }
     public ICollection<OrderReadDTO> Orders { get; set; }

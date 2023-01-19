@@ -1,5 +1,4 @@
-﻿using DAL.Repository.Specific.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DAL;
 

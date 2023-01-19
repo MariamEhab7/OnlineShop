@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace BL;
 
-public class ItemServices
+public class ItemServices : IItemService
 {
+    #region DI
     private readonly IItemRepo _itemRepo;
     private readonly IProductRepo _productRepo;
     private readonly IMapper _mapper;
@@ -22,19 +24,16 @@ public class ItemServices
         _valueRepo = valueRepo;
         _orderRepo = orderRepo;
     }
+    #endregion
 
     public async Task<ItemReadDTO> Additem(ItemAddDTO model)
     {
         var DbItem = _mapper.Map<Items>(model);
-        DbItem.ItemId = new Guid();
+        DbItem.ItemId = Guid.NewGuid();
 
         var product = DbItem.Product;
         var assignProduct = _productRepo.GetById(product.ProductId);
         DbItem.Product = assignProduct;
-
-        var genre = DbItem.GenreOfItems;
-        var assignGenre = _genreRepo.GetById(genre.GenreId);
-        DbItem.GenreOfItems = genre;
 
         var value = DbItem.VariationValues;
         List<VariationValues> values = new List<VariationValues>();
@@ -59,6 +58,22 @@ public class ItemServices
         _itemRepo.SaveChanges();
         var readProduct = _mapper.Map<ItemReadDTO>(DbItem);
         return readProduct;
+    }
+
+    public void DeleteItem(Guid id)
+    {
+        _itemRepo.DeleteById(id);
+        _itemRepo.SaveChanges();
+    }
+
+    public async Task<ItemReadDTO> UpdateItem(ItemUpdateDTO model, Guid id)
+    {
+        var OldItem = _itemRepo.GetById(id);
+        _mapper.Map(model, OldItem);
+        _itemRepo.Update(OldItem);
+        _itemRepo.SaveChanges();
+        var result = _mapper.Map<ItemReadDTO>(OldItem);
+        return result;
     }
 
 }

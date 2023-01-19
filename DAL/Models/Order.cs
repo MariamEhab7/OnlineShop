@@ -17,9 +17,4 @@ public class Order
 
     public Customer Customer { get; set; }
     public ICollection<Items> Items { get; set; }
-
-    //public decimal Total {
-    //get { return Quantity*Product.UnitPrice }
-    //Set {} 
-    //}
 }

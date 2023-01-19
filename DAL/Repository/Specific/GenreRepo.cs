@@ -1,5 +1,4 @@
-﻿using DAL.Repository.Specific.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DAL;
 
@@ -14,7 +13,7 @@ public class GenreRepo : GenericRepo<GenreOfItems>, IGenreRepo
 
     public async Task<GenreOfItems> GetGenreById(Guid id)
     {
-        var result = await _context.GenreOfItems.FirstOrDefaultAsync(c => c.GenreId == id);
+        var result = await _context.GenreOfItems.AsNoTracking().FirstOrDefaultAsync(c => c.GenreId == id);
         return result;
     }
 }
