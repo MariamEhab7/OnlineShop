@@ -36,23 +36,11 @@ public class ItemServices : IItemService
         DbItem.Product = assignProduct;
 
         var value = DbItem.VariationValues;
-        List<VariationValues> values = new List<VariationValues>();
-        foreach(var v in value)
-        {
-            var assign = _valueRepo.GetById(v.ValuesId);
-            values.Add(assign);
-        }
-        DbItem.VariationValues = values;
+        DbItem.VariationValues = AssignValue(value);
 
 
         var order = DbItem.Orders;
-        List<Order> orders = new List<Order>();
-        foreach (var ord in order)
-        {
-            var assign = _orderRepo.GetById(ord.OrderId);
-            orders.Add(assign);
-        }
-        DbItem.Orders = orders;
+        DbItem.Orders = AssignOrder(order);
 
         _itemRepo.Add(DbItem);
         _itemRepo.SaveChanges();
@@ -75,5 +63,30 @@ public class ItemServices : IItemService
         var result = _mapper.Map<ItemReadDTO>(OldItem);
         return result;
     }
+
+
+    #region Helping Methods
+    public List<VariationValues> AssignValue (ICollection<VariationValues> value)
+    {
+        List<VariationValues> values = new List<VariationValues>();
+        foreach (var v in value)
+        {
+            var assign = _valueRepo.GetById(v.ValuesId);
+            values.Add(assign);
+        }
+        return values;
+    }
+
+    public List<Order> AssignOrder(ICollection<Order> order)
+    {
+        List<Order> orders = new List<Order>();
+        foreach (var ord in order)
+        {
+            var assign = _orderRepo.GetById(ord.OrderId);
+            orders.Add(assign);
+        }
+        return orders;
+    }
+    #endregion
 
 }

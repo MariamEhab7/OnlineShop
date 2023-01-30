@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20230118191854_removeGenreFromItem")]
-    partial class removeGenreFromItem
+    [Migration("20230121221439_updates")]
+    partial class updates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CountryId")
+                    b.Property<Guid?>("CountryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -82,11 +82,9 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CustomerName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
@@ -94,7 +92,7 @@ namespace DAL.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("DAL.GenreOfItems", b =>
+            modelBuilder.Entity("DAL.Genre", b =>
                 {
                     b.Property<Guid>("GenreId")
                         .ValueGeneratedOnAdd()
@@ -106,7 +104,7 @@ namespace DAL.Migrations
 
                     b.HasKey("GenreId");
 
-                    b.ToTable("GenreOfItems");
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("DAL.Items", b =>
@@ -116,13 +114,12 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ItemName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -141,7 +138,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("OrderTotal")
@@ -163,7 +160,6 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -171,11 +167,9 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -199,10 +193,10 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GenreOfItemsGenreId")
+                    b.Property<Guid?>("GenreId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ProductName")
@@ -213,7 +207,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("GenreOfItemsGenreId");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Products");
                 });
@@ -224,16 +218,11 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("VariationName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("VariationId");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Variations");
                 });
@@ -248,7 +237,7 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("VariationId")
+                    b.Property<Guid?>("VariationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ValuesId");
@@ -292,9 +281,7 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });
@@ -303,9 +290,7 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
                 });
@@ -314,9 +299,7 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
                 });
@@ -344,39 +327,22 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
-                    b.HasOne("DAL.GenreOfItems", "GenreOfItems")
+                    b.HasOne("DAL.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreOfItemsGenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenreId");
 
                     b.Navigation("Category");
 
-                    b.Navigation("GenreOfItems");
-                });
-
-            modelBuilder.Entity("DAL.Variation", b =>
-                {
-                    b.HasOne("DAL.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("DAL.VariationValues", b =>
                 {
                     b.HasOne("DAL.Variation", "Variation")
                         .WithMany()
-                        .HasForeignKey("VariationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VariationId");
 
                     b.Navigation("Variation");
                 });
@@ -413,8 +379,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Customer", b =>
                 {
-                    b.Navigation("PersonalDetails")
-                        .IsRequired();
+                    b.Navigation("PersonalDetails");
                 });
 #pragma warning restore 612, 618
         }

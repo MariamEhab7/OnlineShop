@@ -2,5 +2,5 @@
 
 public interface ICategoryRepo : IGenericRepo<Category>
 {
-    Task<Category> GetCategoryById(Guid id);
+    Task<Category?> GetCategoryById(Guid id);
 }

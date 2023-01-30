@@ -15,6 +15,8 @@ public class AutoMapperProfile : Profile
 		CreateMap<CategoryAddDTO, Category>();
 		CreateMap<VariationValAddDTO, VariationValues>();
 		CreateMap<VariationAddDTO, Variation>();
+		CreateMap<UserRegisterDTO, PersonalDetails>();
+		CreateMap<UserLoginDTO, User>();
 
 		//neglectable//
 		CreateMap<ProductReadDTO, Product>();

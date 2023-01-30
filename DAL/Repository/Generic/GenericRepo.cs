@@ -17,7 +17,7 @@ public class GenericRepo<Entity> : IGenericRepo<Entity> where Entity : class
         return _context.Set<Entity>().ToList();
     }
 
-    public Entity GetById(Guid id)
+    public Entity? GetById(Guid id)
     {
         return _context.Set<Entity>().Find(id);
     }

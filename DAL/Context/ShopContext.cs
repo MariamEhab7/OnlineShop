@@ -10,10 +10,10 @@ public class ShopContext : DbContext
 
     }
 
-    public DbSet<Customer> Customers { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<PersonalDetails> PersonalDetails { get; set; }
     public DbSet<Category> Categories { get; set; }
-    public DbSet<GenreOfItems> GenreOfItems { get; set; }
+    public DbSet<Genre> Genres { get; set; }
     public DbSet<Items> Items { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Variation> Variations { get; set; }
@@ -25,9 +25,9 @@ public class ShopContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Customer>()
+        modelBuilder.Entity<User>()
             .HasOne(b => b.PersonalDetails)
-            .WithOne(i => i.Customer)
+            .WithOne(i => i.User)
             .HasForeignKey<PersonalDetails>(b => b.Id);
     }
 }

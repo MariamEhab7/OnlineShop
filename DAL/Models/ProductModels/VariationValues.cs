@@ -11,9 +11,9 @@ public class VariationValues
     [Key]
     public Guid ValuesId { get; set; }
     [Required]
-    public string Values { get; set; }
+    public string Values { get; set; } = "";
 
-    public Variation Variation { get; set; }
+    public Variation? Variation { get; set; }
     public ICollection<Items> Items { get; set; }
 
 }

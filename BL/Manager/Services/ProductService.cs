@@ -30,9 +30,9 @@ public class ProductService : IProductService
 		var assignCategory = await _categoryRepo.GetCategoryById(category.CategoryId);
 		DbProduct.Category = assignCategory;
 
-        var genre = DbProduct.GenreOfItems;
+        var genre = DbProduct.Genre;
 		var assignGenre = await _genreRepo.GetGenreById(genre.GenreId);
-		DbProduct.GenreOfItems = assignGenre;
+		DbProduct.Genre = assignGenre;
 
 		_productRepo.Add(DbProduct);
 		_productRepo.SaveChanges();

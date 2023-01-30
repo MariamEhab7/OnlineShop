@@ -2,6 +2,6 @@
 
 public class CategoryAddDTO
 {
-    public string CategoryName { get; set; }
+    public string? CategoryName { get; set; }
 
 }

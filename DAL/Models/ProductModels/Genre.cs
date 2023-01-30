@@ -2,10 +2,9 @@
 
 namespace DAL;
 
-public class GenreOfItems
+public class Genre
 {
-    [Key]
     public Guid GenreId { get; set; }
-    [Required]
-    public string GenreName { get; set; }
+   
+    public string GenreName { get; set; } = "";
 }

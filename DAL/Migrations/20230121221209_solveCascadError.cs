@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class solveCascadError : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,8 +40,8 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,18 +65,11 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     VariationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VariationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    VariationName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Variations", x => x.VariationId);
-                    table.ForeignKey(
-                        name: "FK_Variations_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +78,7 @@ namespace DAL.Migrations
                 {
                     AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,8 +87,7 @@ namespace DAL.Migrations
                         name: "FK_Addresses_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "CountryId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CountryId");
                 });
 
             migrationBuilder.CreateTable(
@@ -104,7 +96,7 @@ namespace DAL.Migrations
                 {
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderTotal = table.Column<double>(type: "float", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -113,8 +105,7 @@ namespace DAL.Migrations
                         name: "FK_Orders_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CustomerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -123,8 +114,8 @@ namespace DAL.Migrations
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GenreOfItemsGenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -133,14 +124,12 @@ namespace DAL.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CategoryId");
                     table.ForeignKey(
-                        name: "FK_Products_GenreOfItems_GenreOfItemsGenreId",
-                        column: x => x.GenreOfItemsGenreId,
+                        name: "FK_Products_GenreOfItems_GenreId",
+                        column: x => x.GenreId,
                         principalTable: "GenreOfItems",
-                        principalColumn: "GenreId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "GenreId");
                 });
 
             migrationBuilder.CreateTable(
@@ -149,7 +138,7 @@ namespace DAL.Migrations
                 {
                     ValuesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Values = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VariationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    VariationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,8 +147,7 @@ namespace DAL.Migrations
                         name: "FK_VariationValues_Variations_VariationId",
                         column: x => x.VariationId,
                         principalTable: "Variations",
-                        principalColumn: "VariationId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "VariationId");
                 });
 
             migrationBuilder.CreateTable(
@@ -167,11 +155,11 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -197,27 +185,19 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GenreOfItemsGenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_Items_GenreOfItems_GenreOfItemsGenreId",
-                        column: x => x.GenreOfItemsGenreId,
-                        principalTable: "GenreOfItems",
-                        principalColumn: "GenreId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Items_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ProductId");
                 });
 
             migrationBuilder.CreateTable(
@@ -274,11 +254,6 @@ namespace DAL.Migrations
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_GenreOfItemsGenreId",
-                table: "Items",
-                column: "GenreOfItemsGenreId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Items_ProductId",
                 table: "Items",
                 column: "ProductId");
@@ -309,14 +284,9 @@ namespace DAL.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_GenreOfItemsGenreId",
+                name: "IX_Products_GenreId",
                 table: "Products",
-                column: "GenreOfItemsGenreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Variations_CategoryId",
-                table: "Variations",
-                column: "CategoryId");
+                column: "GenreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VariationValues_VariationId",
@@ -361,10 +331,10 @@ namespace DAL.Migrations
                 name: "Countries");
 
             migrationBuilder.DropTable(
-                name: "GenreOfItems");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "GenreOfItems");
         }
     }
 }

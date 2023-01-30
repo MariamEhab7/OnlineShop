@@ -2,8 +2,8 @@
 
 namespace DAL;
 
-public interface IGenreRepo : IGenericRepo<GenreOfItems>
+public interface IGenreRepo : IGenericRepo<Genre>
 {
-    Task<GenreOfItems> GetGenreById(Guid id);
+    Task<Genre?> GetGenreById(Guid id);
 
 }

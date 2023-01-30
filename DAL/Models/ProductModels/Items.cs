@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL;
 
@@ -12,16 +13,14 @@ public class Items
     [Key]
     public Guid ItemId { get; set; }
 
-    [Required]
-    public string ItemName { get; set; }
+    public string? ItemName { get; set; }
 
-    [Required]
     public double Price { get; set; }
 
-    [Required]
     public int Quantity { get; set; }
 
-    public Product Product { get; set; }
+    [ForeignKey("ProductId")]
+    public Product? Product { get; set; }
 
     public ICollection<VariationValues> VariationValues { get; set; }
     public ICollection<Order> Orders { get; set; }

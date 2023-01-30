@@ -1,6 +1,8 @@
 using BL;
 using DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(Conne
 
 #region Services
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddScoped<IItemRepo, ItemRepo>();
@@ -26,12 +29,37 @@ builder.Services.AddScoped<IGenreRepo, GenreRepo>();
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 builder.Services.AddScoped<IVariationValueRepo, VariationValueRepo>();
 builder.Services.AddScoped<IVariationRepo, VariationRepo>();
+builder.Services.AddScoped<IPersonalRepo, PersonalRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
 builder.Services.AddScoped<IItemService, ItemServices>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IVariationService, VariationService>();
+builder.Services.AddScoped<IUserService, UserService>();
 #endregion
+
+#region Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "DefaultAuth";
+    options.DefaultChallengeScheme = "DefaultAuth";
+}) //Auth is default
+    .AddJwtBearer("DefaultAuth", options =>
+    {
+        var keyString = builder.Configuration.GetValue<string>("SecretKey");
+        var keyInBytes = Encoding.ASCII.GetBytes(keyString);
+        var key = new SymmetricSecurityKey(keyInBytes);
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            IssuerSigningKey = key,
+            ValidateIssuer = false, //sender, receiver
+            ValidateAudience = false
+        };
+    });
+#endregion
+
 
 var app = builder.Build();
 

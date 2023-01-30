@@ -2,7 +2,7 @@
 
 namespace DAL;
 
-public class GenreRepo : GenericRepo<GenreOfItems>, IGenreRepo
+public class GenreRepo : GenericRepo<Genre>, IGenreRepo
 {
     private readonly ShopContext _context;
 
@@ -11,9 +11,9 @@ public class GenreRepo : GenericRepo<GenreOfItems>, IGenreRepo
         _context = context;
     }
 
-    public async Task<GenreOfItems> GetGenreById(Guid id)
+    public async Task<Genre?> GetGenreById(Guid id)
     {
-        var result = await _context.GenreOfItems.AsNoTracking().FirstOrDefaultAsync(c => c.GenreId == id);
+        var result = await _context.Genres.AsNoTracking().FirstOrDefaultAsync(c => c.GenreId == id);
         return result;
     }
 }

@@ -9,7 +9,7 @@ public class VariationValAddDTO
     //    Items = new HashSet<ItemReadDTO>();
     //}
 
-    public string Values { get; set; }
-    public Variation Variation { get; set; }
+    public string? Values { get; set; }
+    public Variation? Variation { get; set; }
     //public ICollection<ItemReadDTO> Items { get; set; }
 }

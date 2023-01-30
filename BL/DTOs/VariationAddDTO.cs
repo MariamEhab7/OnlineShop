@@ -2,5 +2,5 @@
 
 public class VariationAddDTO
 {
-    public string VariationName { get; set; }
+    public string? VariationName { get; set; }
 }
