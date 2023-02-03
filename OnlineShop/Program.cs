@@ -1,4 +1,5 @@
 using BL;
+using BL.Manager.Interfaces;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -38,6 +39,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IVariationService, VariationService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IGenerateJWT, GenerateJWT>();
 #endregion
 
 #region Authentication

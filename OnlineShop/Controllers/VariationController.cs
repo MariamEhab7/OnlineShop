@@ -10,7 +10,7 @@ namespace OnlineShop.Controllers
     public class VariationController : ControllerBase
     {
 
-        #region DI
+        #region Dependancy Injection
         private readonly IVariationService _variationService;
         private readonly IVariationRepo _variationRepo;
 

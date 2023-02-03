@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using DAL;
-using Microsoft.EntityFrameworkCore;
 
 namespace BL;
 
 public class ItemServices : IItemService
 {
-    #region DI
+    #region Dependancy Injection
     private readonly IItemRepo _itemRepo;
     private readonly IProductRepo _productRepo;
     private readonly IMapper _mapper;

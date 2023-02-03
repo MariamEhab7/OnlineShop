@@ -1,4 +1,4 @@
-﻿namespace BL;
+﻿namespace BL.Manager.Interfaces;
 
 public interface IPasswordHasher
 {

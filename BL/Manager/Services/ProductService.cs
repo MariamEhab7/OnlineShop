@@ -5,7 +5,7 @@ namespace BL;
 
 public class ProductService : IProductService
 {
-    #region DI
+    #region Dependancy Injection
     private readonly IProductRepo _productRepo;
 	private readonly IMapper _mapper;
 	private readonly ICategoryRepo _categoryRepo;

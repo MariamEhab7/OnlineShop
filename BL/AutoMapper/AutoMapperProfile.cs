@@ -18,12 +18,7 @@ public class AutoMapperProfile : Profile
 		CreateMap<UserRegisterDTO, PersonalDetails>();
 		CreateMap<UserLoginDTO, User>();
 
-		//neglectable//
-		CreateMap<ProductReadDTO, Product>();
-		CreateMap<ItemReadDTO, Items>();
-		CreateMap<ValuesVarReadDTO, VariationValues>();
 		CreateMap<OrderReadDTO, Order>();
-		///
 
 		CreateMap<Category, CategoryReadDTO>();
 		CreateMap<Product, ProductReadDTO>();

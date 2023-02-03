@@ -9,7 +9,7 @@ namespace OnlineShop.Controllers
     [ApiController]
     public class VariationValuesController : ControllerBase
     {
-        #region DI
+        #region Dependancy Injection
         private readonly IVariationService _variationService;
         private readonly IVariationValueRepo _valueRepo;
 

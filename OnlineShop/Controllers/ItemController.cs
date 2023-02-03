@@ -9,7 +9,7 @@ namespace OnlineShop.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        #region DI
+        #region Dependancy Injection
         private readonly IItemService _itemServices;
         private readonly IItemRepo _itemRepo;
 

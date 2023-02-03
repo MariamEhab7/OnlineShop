@@ -5,7 +5,7 @@ namespace BL;
 
 public class VariationService : IVariationService
 {
-    #region DI
+    #region Dependancy Injection
     private readonly IMapper _mapper;
     private readonly IVariationValueRepo _valueRepo;
     private readonly IVariationRepo _variationRepo;
@@ -48,7 +48,6 @@ public class VariationService : IVariationService
         _valueRepo.DeleteById(id);
         _valueRepo.SaveChanges();
     }
-
 
 
     public async Task<Variation> AddVariation(VariationAddDTO model)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BL.Manager.Interfaces;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +11,7 @@ namespace BL;
 
 public class UserService : IUserService
 {
+    #region Dependancy Injection
     private readonly IUserRepo _userRepo;
     private readonly IPersonalRepo _personalRepo;
     private readonly IAddressRepo _addressRepo;
@@ -26,8 +28,8 @@ public class UserService : IUserService
         _mapper = mapper;
         _passwordHasher = passwordHasher;
         _generateJWT = generateJWT;
-    } 
-    
+    }
+    #endregion
     public async Task<User> UserRegister(UserLoginDTO model)
     {
         var result = await _userRepo.GetUserByName(model.UserName);
@@ -75,7 +77,7 @@ public class UserService : IUserService
         return true;
     }
     
-    public async Task<PersonalDetails> AddUserDetails(UserRegisterDTO model)
+    public async Task<PersonalDetails> AddUserDetails(UserRegisterDTO model) // Working but error in swagger
     {
         var DbUser = _mapper.Map<PersonalDetails>(model);
         DbUser.Id = Guid.NewGuid();
@@ -84,9 +86,8 @@ public class UserService : IUserService
         var assignAdd = _addressRepo.GetById(address.AddressId);
         DbUser.Address = assignAdd;
 
-        var user = DbUser.User;
-        var assignUser = _userRepo.GetById(user.UserId);
-        DbUser.User = assignUser;
+        var aUser = await _userRepo.GetUserByName(model.User.UserName);
+        DbUser.User = aUser;
 
         _personalRepo.Add(DbUser);
         _personalRepo.SaveChanges();
@@ -95,5 +96,4 @@ public class UserService : IUserService
         return result;
     }
 
-   
 }

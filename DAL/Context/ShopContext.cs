@@ -26,8 +26,8 @@ public class ShopContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>()
-            .HasOne(b => b.PersonalDetails)
-            .WithOne(i => i.User)
-            .HasForeignKey<PersonalDetails>(b => b.Id);
+        .HasOne<PersonalDetails>(s => s.PersonalDetails)
+        .WithOne(u => u.User)
+        .HasForeignKey<PersonalDetails>(p => p.Id);
     }
 }

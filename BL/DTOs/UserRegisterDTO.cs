@@ -14,5 +14,5 @@ public class UserRegisterDTO
     public string? Gender { get; set; }
     public Address? Address { get; set; }
     //public User? User { get; set; }
-    public UserLoginDTO? userLogin { get; set; }
+    public UserLoginDTO? User { get; set; }
 }
