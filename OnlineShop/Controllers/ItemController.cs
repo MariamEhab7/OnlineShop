@@ -21,31 +21,83 @@ namespace OnlineShop.Controllers
         #endregion
 
         [HttpGet]
+        [Route("getItems")]
         public async Task<IActionResult> GetAllItems()
         {
             var result = _itemRepo.GetAll();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddItem(ItemAddDTO itemAdd)
+        [Route("addItem")]
+        public async Task<IActionResult> AddItem([FromForm] ItemAddDTO itemAdd)
         {
             var result = await _itemServices.Additem(itemAdd);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             return Ok(result);
         }
 
         [HttpPut]
+        [Route("updateItem")]
         public async Task<IActionResult> UpdateItem(ItemUpdateDTO itemAdd, Guid id)
         {
             var result = await _itemServices.UpdateItem(itemAdd, id);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             return Ok(result);
         }
 
         [HttpDelete]
+        [Route("deleteItem")]
         public async Task<IActionResult> DeleteItem(Guid id)
         {
             _itemServices.DeleteItem(id);
+           
+             if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetItemsByProduct")]
+        public async Task<IActionResult> GetItemsByProduct(Guid id)
+        {
+            var result = await _itemServices.GetItemsOfProduct(id);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(result);
+        }
+        
+        [HttpGet]
+        [Route("GetItemsByPrice")]
+        public async Task<IActionResult> GetItemsByPrice(int price)
+        {
+            var result = await _itemServices.GetItemsByPrice(price);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(result);
+        }
+        
+        [HttpGet]
+        [Route("GetItemDetails")]
+        public async Task<IActionResult> GetItemDetails(Guid id)
+        {
+            var result = await _itemServices.GetItemDetails(id);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(result);
         }
 
     }

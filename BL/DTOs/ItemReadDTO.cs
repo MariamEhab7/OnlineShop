@@ -16,6 +16,7 @@ public class ItemReadDTO
     public double Price { get; set; }
 
     public int Quantity { get; set; }
+    public string ItemImage { get; set; }
 
     public Product? Product { get; set; }
 

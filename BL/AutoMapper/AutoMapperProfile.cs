@@ -8,21 +8,26 @@ public class AutoMapperProfile : Profile
 	public AutoMapperProfile()
 	{
 		CreateMap<ItemAddDTO, Items>();
+
 		CreateMap<ItemUpdateDTO, Items>();
 
-		CreateMap<Items, ItemAddDTO>();
+		CreateMap<Items, ItemAddDTO>();//
+
 		CreateMap<ProductAddDTO, Product>();
-		CreateMap<CategoryAddDTO, Category>();
+
+        CreateMap<CategoryAddDTO, Category>();
 		CreateMap<VariationValAddDTO, VariationValues>();
 		CreateMap<VariationAddDTO, Variation>();
-		CreateMap<UserRegisterDTO, PersonalDetails>();
+		CreateMap<UserInfoDTO, PersonalDetails>();
 		CreateMap<UserLoginDTO, User>();
+		CreateMap<UserRegisterDTO, User>();
 
 		CreateMap<OrderReadDTO, Order>();
 
 		CreateMap<Category, CategoryReadDTO>();
 		CreateMap<Product, ProductReadDTO>();
 		CreateMap<Items, ItemReadDTO>();
+
 		CreateMap<VariationValues, VariationValReadDTO>();
 	}
 }

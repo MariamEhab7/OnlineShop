@@ -2,8 +2,7 @@
 
 public interface IItemRepo : IGenericRepo<Items>
 {
-    //Task<ICollection<Items>> GetItemsForMen();
-    //Task<ICollection<Items>> GetItemsForWomen();
-    //Task<ICollection<Items>> GetItemsForChildren();
+    Task<ICollection<Items>> GetItemsWithPrice(int price);
     Task<ICollection<Items>> GetItemsOfProduct(Guid id);
+    Task<ICollection<Items>> GetItemDetails(Guid id);
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAL;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BL;
 
@@ -25,7 +26,7 @@ public class ItemServices : IItemService
     }
     #endregion
 
-    public async Task<ItemReadDTO> Additem(ItemAddDTO model)
+    public async Task<bool> Additem(ItemAddDTO model)
     {
         var DbItem = _mapper.Map<Items>(model);
         DbItem.ItemId = Guid.NewGuid();
@@ -37,14 +38,12 @@ public class ItemServices : IItemService
         var value = DbItem.VariationValues;
         DbItem.VariationValues = AssignValue(value);
 
-
         var order = DbItem.Orders;
         DbItem.Orders = AssignOrder(order);
 
         _itemRepo.Add(DbItem);
         _itemRepo.SaveChanges();
-        var readProduct = _mapper.Map<ItemReadDTO>(DbItem);
-        return readProduct;
+        return true;
     }
 
     public void DeleteItem(Guid id)
@@ -63,6 +62,33 @@ public class ItemServices : IItemService
         return result;
     }
 
+    public async Task<ICollection<ItemReadDTO>> GetAllItems()
+    {
+        var items = _itemRepo.GetAll();
+        var result = _mapper.Map<ICollection<ItemReadDTO>>(items);
+        return result;
+    }
+
+    public async Task<ICollection<ItemReadDTO>> GetItemsOfProduct(Guid id)
+    {
+        var itemsList = await _itemRepo.GetItemsOfProduct(id);
+        var result = _mapper.Map<ICollection<ItemReadDTO>>(itemsList);
+        return result;
+    }
+    
+    public async Task<ICollection<ItemReadDTO>> GetItemsByPrice(int price)
+    {
+        var itemsList = await _itemRepo.GetItemsWithPrice(price);
+        var result = _mapper.Map<ICollection<ItemReadDTO>>(itemsList);
+        return result;
+    }
+
+    public async Task<ICollection<ItemReadDTO>> GetItemDetails(Guid id)
+    {
+        var item = await _itemRepo.GetItemDetails(id);
+        var result = _mapper.Map<ICollection<ItemReadDTO>>(item);
+        return result;
+    }
 
     #region Helping Methods
     public List<VariationValues> AssignValue (ICollection<VariationValues> value)
@@ -86,6 +112,8 @@ public class ItemServices : IItemService
         }
         return orders;
     }
+
+    
     #endregion
 
 }

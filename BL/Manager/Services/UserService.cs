@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using BL.Manager.Interfaces;
 using DAL;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace BL;
 
@@ -18,9 +14,10 @@ public class UserService : IUserService
     private readonly IMapper _mapper;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IGenerateJWT _generateJWT;
+    private readonly IMailService _mailService;
 
     public UserService(IUserRepo userRepo, IPersonalRepo personalRepo, IAddressRepo addressRepo,
-        IMapper mapper, IPasswordHasher passwordHasher, IGenerateJWT generateJWT)
+        IMapper mapper, IPasswordHasher passwordHasher, IGenerateJWT generateJWT, IMailService mailService)
     {
         _userRepo = userRepo;
         _personalRepo = personalRepo;
@@ -28,6 +25,7 @@ public class UserService : IUserService
         _mapper = mapper;
         _passwordHasher = passwordHasher;
         _generateJWT = generateJWT;
+        _mailService = mailService;
     }
     #endregion
     public async Task<User> UserRegister(UserLoginDTO model)
@@ -77,8 +75,13 @@ public class UserService : IUserService
         return true;
     }
     
-    public async Task<PersonalDetails> AddUserDetails(UserRegisterDTO model) // Working but error in swagger
+    public async Task<bool> AddUserDetails(UserInfoDTO model) // error in swagger
     {
+        if (await _userRepo.GetUserByEmail(model.Email))
+        {
+            return false;
+        }
+
         var DbUser = _mapper.Map<PersonalDetails>(model);
         DbUser.Id = Guid.NewGuid();
 
@@ -92,8 +95,12 @@ public class UserService : IUserService
         _personalRepo.Add(DbUser);
         _personalRepo.SaveChanges();
 
+        _mailService.SendEmail(DbUser.Email, DbUser.Name);
+
         var result = _mapper.Map<PersonalDetails>(DbUser);
-        return result;
+        return true;
     }
+
+
 
 }

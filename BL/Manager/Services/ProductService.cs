@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAL;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BL;
 
@@ -21,9 +22,9 @@ public class ProductService : IProductService
 	}
     #endregion
 
-    public async Task<ProductReadDTO> AddProduct(ProductAddDTO model)
+    public async Task<bool> AddProduct(ProductAddDTO model)
 	{
-		var DbProduct= _mapper.Map<Product>(model);
+        var DbProduct= _mapper.Map<Product>(model);
         DbProduct.ProductId = Guid.NewGuid();
 
         var category = DbProduct.Category;
@@ -36,17 +37,16 @@ public class ProductService : IProductService
 
 		_productRepo.Add(DbProduct);
 		_productRepo.SaveChanges();
-		var readProduct = _mapper.Map<ProductReadDTO>(DbProduct);
-		return readProduct;
+		return true;
     }
 
     public async Task<ProductReadDTO> UpdateProduct(ProductAddDTO model, Guid id)
     {
-        var Old = _productRepo.GetById(id);
-        _mapper.Map(model, Old );
-        _productRepo.Update(Old);
+        var old = _productRepo.GetById(id);
+        _mapper.Map(model, old );
+        _productRepo.Update(old);
         _productRepo.SaveChanges();
-        var result = _mapper.Map<ProductReadDTO>(Old);
+        var result = _mapper.Map<ProductReadDTO>(old);
         return result;
     } 
 	
@@ -54,5 +54,26 @@ public class ProductService : IProductService
     {
         _productRepo.DeleteById(id);
         _productRepo.SaveChanges();
+    }
+
+    public async Task<ICollection<ProductReadDTO>> GetChildrenProducts()
+    {
+        var prod = await _productRepo.GetChildrenProducts();
+        var result = _mapper.Map<ICollection<ProductReadDTO>>(prod);
+        return result;
+    }
+
+    public async Task<ICollection<ProductReadDTO>> GetMenProducts()
+    {
+        var prod = await _productRepo.GetMenProducts();
+        var result = _mapper.Map<ICollection<ProductReadDTO>>(prod);
+        return result;
+    }
+
+    public async Task<ICollection<ProductReadDTO>> GetWomenProducts()
+    {
+        var prod = await _productRepo.GetWomenProducts();
+        var result = _mapper.Map<ICollection<ProductReadDTO>>(prod);
+        return result;
     }
 }

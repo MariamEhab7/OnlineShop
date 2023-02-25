@@ -93,6 +93,10 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ItemImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ItemName")
                         .HasColumnType("nvarchar(max)");
 
@@ -173,6 +177,10 @@ namespace DAL.Migrations
 
                     b.Property<Guid?>("GenreId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProductImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()

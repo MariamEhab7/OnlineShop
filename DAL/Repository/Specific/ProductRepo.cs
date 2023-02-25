@@ -13,19 +13,19 @@ public class ProductRepo : GenericRepo<Product>,  IProductRepo
 
     public async Task<ICollection<Product>> GetChildrenProducts()
     {
-        var products = await _context.Products.Where(p => p.Genre.Equals("C")).ToListAsync();
+        var products = _context.Products.Where(p => p.Genre.GenreName.Equals("kids")).ToList();
         return products;
     }
 
     public async Task<ICollection<Product>> GetMenProducts()
     {
-        var products = await _context.Products.Where(p => p.Genre.Equals("M")).ToListAsync();
+        var products = _context.Products.Where(p => p.Genre.GenreName.Equals("men")).ToList();
         return products;
     }
 
     public async Task<ICollection<Product>> GetWomenProducts()
     {
-        var products = await _context.Products.Where(p => p.Genre.Equals("F")).ToListAsync();
+        var products = _context.Products.Where(p => p.Genre.GenreName.Equals("women")).ToList();
         return products;
     }
 }

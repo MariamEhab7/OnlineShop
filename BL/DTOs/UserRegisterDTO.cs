@@ -1,18 +1,15 @@
-﻿using DAL;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BL;
 
 public class UserRegisterDTO
 {
-    public string? Name { get; set; }
+    [UserNameValidation]
+    public string? UserName { get; set; }
 
-    public string? Phone { get; set; }
+    [PasswordValidation]
+    public string? Password { get; set; }
 
-    [EmailValidation]
-    public string? Email { get; set; }
-
-    public string? Gender { get; set; }
-    public Address? Address { get; set; }
-    //public User? User { get; set; }
-    public UserLoginDTO? User { get; set; }
+    [Compare("Password")]
+    public string? ConfirmPassword { get; set; }
 }

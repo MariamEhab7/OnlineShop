@@ -36,18 +36,27 @@ namespace OnlineShop.Controllers
                 return BadRequest(ModelState);
 
             var result = await _userService.UserLogin(userLogin);
-            return Ok(result);
+
+            if (result)
+                return Ok(result);
+
+            else
+                return BadRequest("Wrong Username or Password!");
         } 
         
         
         [HttpPost]
         [Route("personalDetails")]
-        public async Task<IActionResult> AddDetails(UserRegisterDTO user)
+        public async Task<IActionResult> AddDetails(UserInfoDTO user)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var result = await _userService.AddUserDetails(user);
+            if(result == false)
+            {
+                return BadRequest("This email already exists");
+            }
             return Ok(result);
         }
 

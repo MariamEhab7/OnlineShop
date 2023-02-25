@@ -13,7 +13,7 @@ public class GenreRepo : GenericRepo<Genre>, IGenreRepo
 
     public async Task<Genre?> GetGenreById(Guid id)
     {
-        var result = await _context.Genres.AsNoTracking().FirstOrDefaultAsync(c => c.GenreId == id);
+        var result = await _context.Genres.FirstOrDefaultAsync(c => c.GenreId == id);
         return result;
     }
 }

@@ -16,6 +16,8 @@ public class ItemUpdateDTO
 
     public int Quantity { get; set; }
 
+    public string ItemImage { get; set; }
+
     public Product? Product { get; set; }
 
     public ICollection<ValuesVarReadDTO> VariationValues { get; set; }

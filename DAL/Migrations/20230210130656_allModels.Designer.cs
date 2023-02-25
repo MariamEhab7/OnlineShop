@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20230202185722_EditFluentAPI")]
-    partial class EditFluentAPI
+    [Migration("20230210130656_allModels")]
+    partial class allModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,10 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ItemImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ItemName")
                         .HasColumnType("nvarchar(max)");
 
@@ -176,6 +180,10 @@ namespace DAL.Migrations
 
                     b.Property<Guid?>("GenreId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProductImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()

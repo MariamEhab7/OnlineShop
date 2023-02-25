@@ -19,6 +19,8 @@ public class Items
 
     public int Quantity { get; set; }
 
+    public string ItemImage { get; set; } = "";
+    
     [ForeignKey("ProductId")]
     public Product? Product { get; set; }
 

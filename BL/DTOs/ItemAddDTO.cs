@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Microsoft.AspNetCore.Http;
 
 namespace BL;
 
@@ -16,8 +17,9 @@ public class ItemAddDTO
 
     public int Quantity { get; set; }
 
-    public Product? Product { get; set; }
+    public string ItemImage { get; set; }
 
+    public Product? Product { get; set; }
     public ICollection<ValuesVarReadDTO> VariationValues { get; set; }
     public ICollection<OrderReadDTO> Orders { get; set; }
 }

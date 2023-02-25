@@ -9,6 +9,8 @@ public class Product
     public Guid ProductId { get; set; }
     public string ProductName { get; set; } = "";
 
+    public string ProductImage { get; set; } = "";
+
     [ForeignKey("CategoryId")]
     public Category? Category { get; set; }
 
