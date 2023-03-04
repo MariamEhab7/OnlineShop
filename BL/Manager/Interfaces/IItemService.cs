@@ -8,4 +8,5 @@ public interface IItemService
     Task<ICollection<ItemReadDTO>> GetItemsOfProduct(Guid id);
     Task<ICollection<ItemReadDTO>> GetItemsByPrice(int price);
     Task<ICollection<ItemReadDTO>> GetItemDetails(Guid id);
+    Task<bool> AssignVariations(Guid Item, List<Guid> Values);
 }

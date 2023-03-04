@@ -28,4 +28,6 @@ public class ProductRepo : GenericRepo<Product>,  IProductRepo
         var products = _context.Products.Where(p => p.Genre.GenreName.Equals("women")).ToList();
         return products;
     }
+
+
 }

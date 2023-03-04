@@ -89,6 +89,14 @@ public class ItemServices : IItemService
         var result = _mapper.Map<ICollection<ItemReadDTO>>(item);
         return result;
     }
+    public async Task<bool> AssignVariations(Guid Item, List<Guid> Values)
+    {
+        var item = await _itemRepo.AssignVariationsToItem(Item, Values);
+        if (item == null)
+            return false;
+        return true;
+    }
+
 
     #region Helping Methods
     public List<VariationValues> AssignValue (ICollection<VariationValues> value)
@@ -113,7 +121,6 @@ public class ItemServices : IItemService
         return orders;
     }
 
-    
     #endregion
 
 }
